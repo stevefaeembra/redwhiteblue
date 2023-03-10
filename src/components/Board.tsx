@@ -12,7 +12,7 @@ export default function Board({}: Props) {
     for (let row = 0; row < boardSize; row++) {
       let thisRow = [];
       for (let row = 0; row < boardSize; row++) {
-        let color = 1 + Math.floor(Math.random() * 3);
+        let color = Math.floor(Math.random() * 3);
         thisRow.push(color);
       }
       array.push(thisRow);
@@ -21,20 +21,68 @@ export default function Board({}: Props) {
     console.log("New board", array);
   };
 
+  const cycleCell = (row: number, col: number) => {
+    if (!board) return;
+    let newBoard: number[][] = [...board];
+    newBoard[row][col] = (board[row][col] + 1) % 3;
+    setBoard(newBoard);
+  };
+
+  const handleClick = (row: number, col: number) => {
+    //alert(`Clicked row ${row}, column ${col}`);
+    cycleCell(row, col);
+  };
+
   const drawCell = (row: number, col: number) => {
     if (!board) return;
     const clazz = "object-scale-down";
     const key = `cell_${row}_${col}`;
     switch (board[row][col]) {
       case 0:
-        return <img width="48" height="48" key={key} className={clazz} src="empty.png"></img>;
-        break;
+        return (
+          <img
+            onClick={() => handleClick(row, col)}
+            width="48"
+            height="48"
+            key={key}
+            className={clazz}
+            src="red.png"
+          ></img>
+        );
       case 1:
-        return <img width="48" height="48" key={key} className={clazz} src="red.png"></img>;
+        return (
+          <img
+            onClick={() => handleClick(row, col)}
+            width="48"
+            height="48"
+            key={key}
+            className={clazz}
+            src="white.png"
+          ></img>
+        );
       case 2:
-        return <img width="48" height="48" key={key} className={clazz} src="white.png"></img>;
+        return (
+          <img
+            onClick={() => handleClick(row, col)}
+            width="48"
+            height="48"
+            key={key}
+            className={clazz}
+            src="blue.png"
+          ></img>
+        );
       case 3:
-        return <img width="48" height="48" key={key} className={clazz} src="blue.png"></img>;
+        return (
+          <img
+            onClick={() => handleClick(row, col)}
+            width="48"
+            height="48"
+            key={key}
+            className={clazz}
+            src="empty.png"
+          ></img>
+        );
+        break;
     }
   };
 
