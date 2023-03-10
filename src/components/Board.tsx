@@ -23,22 +23,27 @@ export default function Board({}: Props) {
 
   const drawCell = (row: number, col: number) => {
     if (!board) return;
-    const clazz = "object-scale-down h-32 w-32";
+    const clazz = "object-scale-down";
+    const key = `cell_${row}_${col}`;
     switch (board[row][col]) {
       case 0:
-        return <img className={clazz} src="empty.png"></img>;
+        return <img width="48" height="48" key={key} className={clazz} src="empty.png"></img>;
         break;
       case 1:
-        return <img className={clazz} src="red.png"></img>;
+        return <img width="48" height="48" key={key} className={clazz} src="red.png"></img>;
       case 2:
-        return <img className={clazz} src="white.png"></img>;
+        return <img width="48" height="48" key={key} className={clazz} src="white.png"></img>;
       case 3:
-        return <img className={clazz} src="blue.png"></img>;
+        return <img width="48" height="48" key={key} className={clazz} src="blue.png"></img>;
     }
   };
 
   const drawRow = (row: number) => {
-    return <div className="flex flex-row">{indices.map((col: number) => drawCell(row, col))}</div>;
+    return (
+      <div key={row} className="flex flex-row">
+        {indices.map((col: number) => drawCell(row, col))}
+      </div>
+    );
   };
 
   const drawBoard = () => {
