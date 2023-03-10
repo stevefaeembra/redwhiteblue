@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FloodFill, MovesLeft } from "../utils/FloodFill";
 
 type Props = {};
@@ -7,7 +7,7 @@ export default function Board({}: Props) {
   const boardSize = 12;
   const indices = [...Array(boardSize).keys()];
   const [board, setBoard] = useState<number[][]>();
-  const [movesLeft, setMovesLeft] = useState<number>(0);
+  const [movesLeft, setMovesLeft] = useState<number>(999);
 
   const resetBoard = () => {
     let array = [];
@@ -101,12 +101,15 @@ export default function Board({}: Props) {
   };
 
   const drawBoard = () => {
+    // if (movesLeft == 0) {
+    //   debugger;
+    // }
     return (
       <div className="contianer mx-auto w-1/2 h-1/2 grid gap-0">
         <div className="row">
           <div className="">{indices.map((row: number) => drawRow(row))}</div>
         </div>
-        {movesLeft ? (
+        {movesLeft >= 0 ? (
           <div className="row">
             {movesLeft === 0 || !movesLeft ? (
               <h1>No moves left </h1>
@@ -122,6 +125,10 @@ export default function Board({}: Props) {
   if (!board) {
     resetBoard();
   }
+
+  useEffect(() => {
+    drawBoard();
+  }, [movesLeft]);
 
   return board ? drawBoard() : null;
 }
