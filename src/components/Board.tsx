@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FloodFill } from "../utils/FloodFill";
+import { FloodFill, MovesLeft } from "../utils/FloodFill";
 
 type Props = {};
 
@@ -7,6 +7,7 @@ export default function Board({}: Props) {
   const boardSize = 12;
   const indices = [...Array(boardSize).keys()];
   const [board, setBoard] = useState<number[][]>();
+  const [movesLeft, setMovesLeft] = useState<number>(0);
 
   const resetBoard = () => {
     let array = [];
@@ -19,7 +20,6 @@ export default function Board({}: Props) {
       array.push(thisRow);
     }
     setBoard(array);
-    console.log("New board", array);
   };
 
   const cycleCell = (row: number, col: number) => {
@@ -29,6 +29,8 @@ export default function Board({}: Props) {
     const postMoveBoard = FloodFill(newBoard, row, col);
     if (postMoveBoard) {
       setBoard(postMoveBoard);
+      const possibleMoves = MovesLeft(postMoveBoard);
+      setMovesLeft(possibleMoves);
     }
   };
 
@@ -99,11 +101,12 @@ export default function Board({}: Props) {
   };
 
   const drawBoard = () => {
-    console.log("indeces", indices);
     return (
-      <div className="container mx-auto w-1/2 h-1/2 flex flex-col gap-0">
-        {indices.map((row: number) => drawRow(row))}
-      </div>
+      <>
+        <div className="container mx-auto w-1/2 h-1/2 flex flex-col gap-0">
+          {indices.map((row: number) => drawRow(row))}
+        </div>
+      </>
     );
   };
 
