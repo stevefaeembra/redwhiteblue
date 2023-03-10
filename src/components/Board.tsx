@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { FloodFill } from "../utils/FloodFill";
 
 type Props = {};
 
@@ -25,7 +26,10 @@ export default function Board({}: Props) {
     if (!board) return;
     let newBoard: number[][] = [...board];
     newBoard[row][col] = (board[row][col] + 1) % 3;
-    setBoard(newBoard);
+    const postMoveBoard = FloodFill(newBoard, row, col);
+    if (postMoveBoard) {
+      setBoard(postMoveBoard);
+    }
   };
 
   const handleClick = (row: number, col: number) => {
