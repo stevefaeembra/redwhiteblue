@@ -102,11 +102,20 @@ export default function Board({}: Props) {
 
   const drawBoard = () => {
     return (
-      <>
-        <div className="container mx-auto w-1/2 h-1/2 flex flex-col gap-0">
-          {indices.map((row: number) => drawRow(row))}
+      <div className="contianer mx-auto w-1/2 h-1/2 grid gap-0">
+        <div className="row">
+          <div className="">{indices.map((row: number) => drawRow(row))}</div>
         </div>
-      </>
+        {movesLeft ? (
+          <div className="row">
+            {movesLeft === 0 || !movesLeft ? (
+              <h1>No moves left </h1>
+            ) : (
+              <h1 className="">{`${movesLeft} moves left`}</h1>
+            )}
+          </div>
+        ) : null}
+      </div>
     );
   };
 
