@@ -11,6 +11,7 @@ export default function Board({}: Props) {
   const [movesMade, setMovesMade] = useState<number>(0);
   const [capturesMade, setCapturesMade] = useState<number>(0);
   const [averageMove, setAverageMove] = useState<number>(0);
+  const [bestMove, setBestMove] = useState<number>(0);
 
   const resetBoard = () => {
     let array = [];
@@ -26,6 +27,9 @@ export default function Board({}: Props) {
   };
 
   const cycleCell = (row: number, col: number) => {
+    // user made a move by clicking
+    // go red->white->blue->red
+    // then capture neighbouring of the new color
     if (!board) return;
     let newBoard: number[][] = [...board];
     newBoard[row][col] = (board[row][col] + 1) % 3;
@@ -34,6 +38,9 @@ export default function Board({}: Props) {
       setMovesMade(movesMade + 1);
       setCapturesMade(capturesMade + captures);
       setAverageMove((capturesMade + captures) / (movesMade + 1));
+      if (captures > bestMove) {
+        setBestMove(captures);
+      }
       setBoard(postMoveBoard);
       const possibleMoves = MovesLeft(postMoveBoard);
       setMovesLeft(possibleMoves);
@@ -41,7 +48,6 @@ export default function Board({}: Props) {
   };
 
   const handleClick = (row: number, col: number) => {
-    //alert(`Clicked row ${row}, column ${col}`);
     cycleCell(row, col);
   };
 
@@ -113,16 +119,18 @@ export default function Board({}: Props) {
           <div className="">{indices.map((row: number) => drawRow(row))}</div>
         </div>
         {movesLeft >= 0 ? (
-          <div className="row mx-auto">
+          <div className="row mx-auto my-auto">
             {movesLeft === 0 || !movesLeft ? (
               <div>
-                <p>Game over</p>
-                <p className="">{`Moves made: ${movesMade} Average: ${averageMove.toFixed(2)} Moves Left: None`}</p>
+                <p className="font-bold">Game over</p>
+                <p className="font-bold">{`Moves made: ${movesMade} / Best Move: ${bestMove} / Average: ${averageMove.toFixed(
+                  2
+                )}`}</p>
               </div>
             ) : (
-              <p className="">{`Moves made: ${movesMade} Average: ${averageMove.toFixed(
+              <p className="font-bold">{`Moves made: ${movesMade} / Best Move: ${bestMove} / Average: ${averageMove.toFixed(
                 2
-              )} Moves Left: ${movesLeft}`}</p>
+              )} / Moves Left: ${movesLeft}`}</p>
             )}
           </div>
         ) : null}
