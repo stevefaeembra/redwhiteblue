@@ -8,6 +8,9 @@ export default function Board({}: Props) {
   const indices = [...Array(boardSize).keys()];
   const [board, setBoard] = useState<number[][]>();
   const [movesLeft, setMovesLeft] = useState<number>(999);
+  const [movesMade, setMovesMade] = useState<number>(0);
+  const [capturesMade, setCapturesMade] = useState<number>(0);
+  const [averageMove, setAverageMove] = useState<number>(0);
 
   const resetBoard = () => {
     let array = [];
@@ -26,8 +29,11 @@ export default function Board({}: Props) {
     if (!board) return;
     let newBoard: number[][] = [...board];
     newBoard[row][col] = (board[row][col] + 1) % 3;
-    const postMoveBoard = FloodFill(newBoard, row, col);
+    const { newboard: postMoveBoard, captures } = FloodFill(newBoard, row, col);
     if (postMoveBoard) {
+      setMovesMade(movesMade + 1);
+      setCapturesMade(capturesMade + captures);
+      setAverageMove((capturesMade + captures) / (movesMade + 1));
       setBoard(postMoveBoard);
       const possibleMoves = MovesLeft(postMoveBoard);
       setMovesLeft(possibleMoves);
@@ -101,20 +107,22 @@ export default function Board({}: Props) {
   };
 
   const drawBoard = () => {
-    // if (movesLeft == 0) {
-    //   debugger;
-    // }
     return (
-      <div className="contianer mx-auto w-1/2 h-1/2 grid gap-0">
-        <div className="row">
+      <div className="container mx-auto w-1/2 grid gap-0">
+        <div className="row w-1/2">
           <div className="">{indices.map((row: number) => drawRow(row))}</div>
         </div>
         {movesLeft >= 0 ? (
-          <div className="row">
+          <div className="row mx-auto">
             {movesLeft === 0 || !movesLeft ? (
-              <h1>No moves left </h1>
+              <div>
+                <p>Game over</p>
+                <p className="">{`Moves made: ${movesMade} Average: ${averageMove.toFixed(2)} Moves Left: None`}</p>
+              </div>
             ) : (
-              <h1 className="">{`${movesLeft} moves left`}</h1>
+              <p className="">{`Moves made: ${movesMade} Average: ${averageMove.toFixed(
+                2
+              )} Moves Left: ${movesLeft}`}</p>
             )}
           </div>
         ) : null}

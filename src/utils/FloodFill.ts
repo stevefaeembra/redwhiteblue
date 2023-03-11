@@ -87,5 +87,5 @@ export const FloodFill = (board: number[][], row: number, col: number) => {
     fillPixel(r, c, colorIndex);
   }
   console.log(`Captured ${captures - 1} pieces`);
-  return newboard;
+  return { newboard, captures: captures - 1 };
 };
