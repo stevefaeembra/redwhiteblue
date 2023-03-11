@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FloodFill, MovesLeft } from "../utils/FloodFill";
+import { FloodFill, getCoverage, MovesLeft } from "../utils/FloodFill";
 
 type Props = {};
 
@@ -114,18 +114,18 @@ export default function Board({}: Props) {
 
   const drawBoard = () => {
     return (
-      <div className="container mx-auto w-1/2 grid gap-0">
+      <div className="mx-auto w-4/4 gap-0">
         <div className="row w-1/2">
           <div className="">{indices.map((row: number) => drawRow(row))}</div>
         </div>
         {movesLeft >= 0 ? (
-          <div className="row mx-auto my-auto">
+          <div className="row mx-0">
             {movesLeft === 0 || !movesLeft ? (
               <div>
                 <p className="font-bold">Game over</p>
                 <p className="font-bold">{`Moves made: ${movesMade} / Best Move: ${bestMove} / Average: ${averageMove.toFixed(
                   2
-                )}`}</p>
+                )} / Coverage: ${getCoverage(board).toFixed(0)}%`}</p>
               </div>
             ) : (
               <p className="font-bold">{`Moves made: ${movesMade} / Best Move: ${bestMove} / Average: ${averageMove.toFixed(

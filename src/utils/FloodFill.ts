@@ -1,5 +1,19 @@
 const GRID_SIZE = 12;
 
+export const getCoverage = (board: number[][]) => {
+  // find percentage of cleared grid
+  let emptyCells = 0;
+  if (!board) return 0;
+  for (let row = 0; row < GRID_SIZE; row++) {
+    for (let col = 0; col < GRID_SIZE; col++) {
+      if (board[row][col] === 3) {
+        emptyCells++;
+      }
+    }
+  }
+  return (emptyCells / (GRID_SIZE * GRID_SIZE)) * 100.0;
+};
+
 export const MovesLeft = (board: number[][]) => {
   // a move is where a cell has a N,S,E or W neighbour which is
   // one more than itself, modulo 3. (0->1, 1->2, 2->0)
