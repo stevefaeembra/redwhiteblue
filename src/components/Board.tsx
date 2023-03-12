@@ -35,6 +35,7 @@ export default function Board({}: Props) {
     if (!board) return;
     let newBoard: number[][] = [...board];
     newBoard[row][col] = (board[row][col] + 1) % 3;
+    //@ts-ignore
     const { newboard: postMoveBoard, captures } = FloodFill(newBoard, row, col);
     if (postMoveBoard) {
       setMovesMade(movesMade + 1);

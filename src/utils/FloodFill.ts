@@ -97,6 +97,7 @@ export const FloodFill = (board: number[][], row: number, col: number) => {
   queue.push([row, col]);
   while (queue.length > 0) {
     const cell = queue.pop();
+    //@ts-ignore
     const [r, c] = cell;
     fillPixel(r, c, colorIndex);
   }
