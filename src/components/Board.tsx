@@ -124,14 +124,46 @@ export default function Board({}: Props) {
             {movesLeft === 0 || !movesLeft ? (
               <div>
                 <p className="font-bold text-xl">Game over</p>
-                <p className="font-bold">{`Moves: ${movesMade} / Best Move: ${bestMove} / Average: ${averageMove.toFixed(
-                  2
-                )} / Coverage: ${getCoverage(board).toFixed(0)}%`}</p>
+                <div className="stats shadow">
+                  <div className="stat">
+                    <div className="stat-title">Moves Made</div>
+                    <div className="stat-value">{movesMade}</div>
+                  </div>
+                  <div className="stat">
+                    <div className="stat-title">Best move</div>
+                    <div className="stat-value">{bestMove}</div>
+                  </div>
+                  <div className="stat">
+                    <div className="stat-title">Average</div>
+                    <div className="stat-value">{averageMove.toFixed(2)}</div>
+                  </div>
+                  <div className="stat">
+                    <div className="stat-title">Score</div>
+                    <div className="stat-value">{(averageMove * bestMove).toFixed(0)}</div>
+                  </div>
+                </div>
               </div>
             ) : (
-              <p className="font-bold">{`Moves: ${movesMade} / Best Move: ${bestMove} / Average: ${averageMove.toFixed(
-                2
-              )} / Moves Left: ${movesLeft}`}</p>
+              <>
+                <div className="stats shadow">
+                  <div className="stat">
+                    <div className="stat-title">Moves Made</div>
+                    <div className="stat-value">{movesMade}</div>
+                  </div>
+                  <div className="stat">
+                    <div className="stat-title">Best move</div>
+                    <div className="stat-value">{bestMove}</div>
+                  </div>
+                  <div className="stat">
+                    <div className="stat-title">Average</div>
+                    <div className="stat-value">{averageMove.toFixed(2)}</div>
+                  </div>
+                  <div className="stat">
+                    <div className="stat-title">Moves Left</div>
+                    <div className="stat-value">{movesLeft}</div>
+                  </div>
+                </div>
+              </>
             )}
           </div>
         ) : null}
