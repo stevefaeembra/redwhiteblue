@@ -62,8 +62,8 @@ export default function Board({}: Props) {
         return (
           <img
             onClick={() => handleClick(row, col)}
-            width="48"
-            height="48"
+            width="42"
+            height="42"
             key={key}
             className={clazz}
             src="red.png"
@@ -73,8 +73,8 @@ export default function Board({}: Props) {
         return (
           <img
             onClick={() => handleClick(row, col)}
-            width="48"
-            height="48"
+            width="42"
+            height="42"
             key={key}
             className={clazz}
             src="white.png"
@@ -84,8 +84,8 @@ export default function Board({}: Props) {
         return (
           <img
             onClick={() => handleClick(row, col)}
-            width="48"
-            height="48"
+            width="42"
+            height="42"
             key={key}
             className={clazz}
             src="blue.png"
@@ -95,8 +95,8 @@ export default function Board({}: Props) {
         return (
           <img
             onClick={() => handleClick(row, col)}
-            width="48"
-            height="48"
+            width="42"
+            height="42"
             key={key}
             className={clazz}
             src="empty.png"
@@ -117,14 +117,13 @@ export default function Board({}: Props) {
   const drawBoard = () => {
     return (
       <div className="mx-auto w-4/4 gap-0 my-4">
-        <div className="row w-1/2">
-          <div className="">{indices.map((row: number) => drawRow(row))}</div>
-        </div>
+        <div className="">{indices.map((row: number) => drawRow(row))}</div>
+
         {movesLeft >= 0 ? (
           <div className="row mx-0">
             {movesLeft === 0 || !movesLeft ? (
               <div>
-                <p className="font-bold">Game over</p>
+                <p className="font-bold text-xl">Game over</p>
                 <p className="font-bold">{`Moves: ${movesMade} / Best Move: ${bestMove} / Average: ${averageMove.toFixed(
                   2
                 )} / Coverage: ${getCoverage(board).toFixed(0)}%`}</p>
