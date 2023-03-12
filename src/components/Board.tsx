@@ -24,6 +24,8 @@ export default function Board({}: Props) {
       array.push(thisRow);
     }
     setBoard(array);
+    const possibleMoves = MovesLeft(array);
+    setMovesLeft(possibleMoves);
   };
 
   const cycleCell = (row: number, col: number) => {
@@ -114,7 +116,7 @@ export default function Board({}: Props) {
 
   const drawBoard = () => {
     return (
-      <div className="mx-auto w-4/4 gap-0">
+      <div className="mx-auto w-4/4 gap-0 my-4">
         <div className="row w-1/2">
           <div className="">{indices.map((row: number) => drawRow(row))}</div>
         </div>
@@ -123,12 +125,12 @@ export default function Board({}: Props) {
             {movesLeft === 0 || !movesLeft ? (
               <div>
                 <p className="font-bold">Game over</p>
-                <p className="font-bold">{`Moves made: ${movesMade} / Best Move: ${bestMove} / Average: ${averageMove.toFixed(
+                <p className="font-bold">{`Moves: ${movesMade} / Best Move: ${bestMove} / Average: ${averageMove.toFixed(
                   2
                 )} / Coverage: ${getCoverage(board).toFixed(0)}%`}</p>
               </div>
             ) : (
-              <p className="font-bold">{`Moves made: ${movesMade} / Best Move: ${bestMove} / Average: ${averageMove.toFixed(
+              <p className="font-bold">{`Moves: ${movesMade} / Best Move: ${bestMove} / Average: ${averageMove.toFixed(
                 2
               )} / Moves Left: ${movesLeft}`}</p>
             )}
