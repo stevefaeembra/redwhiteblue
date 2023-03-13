@@ -86,13 +86,19 @@ export default function Board({}: Props) {
     if (!board) return;
     const clazz = "object-scale-down";
     const key = `cell_${row}_${col}`;
+    const screenWidth = window.innerWidth;
+    let iconSize = 42;
+    if (screenWidth < 512) {
+      iconSize = screenWidth / 12;
+    }
+    console.log("screenWidth", screenWidth);
     switch (board[row][col]) {
       case 0:
         return (
           <img
             onClick={() => handleClick(row, col)}
-            width="42"
-            height="42"
+            width={iconSize}
+            height={iconSize}
             key={key}
             className={clazz}
             src="red.png"
@@ -102,8 +108,8 @@ export default function Board({}: Props) {
         return (
           <img
             onClick={() => handleClick(row, col)}
-            width="42"
-            height="42"
+            width={iconSize}
+            height={iconSize}
             key={key}
             className={clazz}
             src="white.png"
@@ -113,8 +119,8 @@ export default function Board({}: Props) {
         return (
           <img
             onClick={() => handleClick(row, col)}
-            width="42"
-            height="42"
+            width={iconSize}
+            height={iconSize}
             key={key}
             className={clazz}
             src="blue.png"
@@ -124,8 +130,8 @@ export default function Board({}: Props) {
         return (
           <img
             onClick={() => handleClick(row, col)}
-            width="42"
-            height="42"
+            width={iconSize}
+            height={iconSize}
             key={key}
             className={clazz}
             src="empty.png"
