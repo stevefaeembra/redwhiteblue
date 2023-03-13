@@ -87,7 +87,7 @@ export default function Board({}: Props) {
     const clazz = "object-scale-down";
     const key = `cell_${row}_${col}`;
     const screenWidth = window.innerWidth;
-    let iconSize = 42;
+    let iconSize = 40;
     if (screenWidth < 512) {
       iconSize = screenWidth / 12;
     }
@@ -152,13 +152,18 @@ export default function Board({}: Props) {
   const drawBoard = () => {
     return (
       <div className="mx-auto w-4/4 gap-0 my-4">
+        <div className="mx-auto w-1/3">
+          <img src="/redwhitebluelogo.png" />
+        </div>
         <div className="">{indices.map((row: number) => drawRow(row))}</div>
 
         {movesLeft >= 0 ? (
           <div className="row mx-0">
             {movesLeft === 0 || !movesLeft ? (
               <div>
-                <p className="font-bold text-xl">Game over</p>
+                <div className="mx-auto w-1/3">
+                  <img alt="Game over!" src="/redwhitebluegameover.png" />
+                </div>
                 <div className="stats stats-vertical md:stats-horizontal shadow">
                   <div className="stat">
                     <div className="stat-title">Moves Made</div>
