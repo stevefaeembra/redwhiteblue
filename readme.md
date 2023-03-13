@@ -30,7 +30,20 @@ There are 3 high scores (stored in LocalStorage), for the best move, best averag
 
 This screenshot shows a quite successful score
 
-![image of fnali board state](./redwhiteblue.png)
+![image of final board state](./redwhiteblue.png)
+
+# Installation
+
+Needs Node >= 16.15.0, uses yarn to build
+
+In the project directory
+
+```
+npm install --global yarn // if yarn not installed already
+yarn
+yarn dev
+open browser to http://localhost:5173/
+```
 
 # Strategy
 

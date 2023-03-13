@@ -173,17 +173,19 @@ export default function Board({}: Props) {
                   <div className="stat">
                     <div className="stat-title">Best move</div>
                     <div className="stat-value">{bestMove}</div>
-                    <div className="stat-desc">{newBestMoveRecord ? "New high!" : "  "}</div>
+                    <div className="stat-desc text-red-900 font-bold">{newBestMoveRecord ? "New high!" : "  "}</div>
                   </div>
                   <div className="stat">
                     <div className="stat-title">Average</div>
                     <div className="stat-value">{averageMove.toFixed(2)}</div>
-                    <div className="stat-desc">{newAverageScoreRecord ? "New high!" : "  "}</div>
+                    <div className="stat-desc text-red-900  font-bold">
+                      {newAverageScoreRecord ? "New high!" : "  "}
+                    </div>
                   </div>
                   <div className="stat">
                     <div className="stat-title">Score</div>
                     <div className="stat-value">{(averageMove * bestMove).toFixed(0)}</div>
-                    <div className="stat-desc">{newHighScoreRecord ? "New high!" : "  "}</div>
+                    <div className="stat-desc text-red-900  font-bold">{newHighScoreRecord ? "New high!" : "  "}</div>
                   </div>
                 </div>
               </div>
