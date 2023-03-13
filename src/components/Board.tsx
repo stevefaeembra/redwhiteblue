@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FloodFill, getCoverage, MovesLeft } from "../utils/FloodFill";
+import { useLocalStorage } from "usehooks-ts";
 
 type Props = {};
 
@@ -12,6 +13,13 @@ export default function Board({}: Props) {
   const [capturesMade, setCapturesMade] = useState<number>(0);
   const [averageMove, setAverageMove] = useState<number>(0);
   const [bestMove, setBestMove] = useState<number>(0);
+  const [bestMoveHighScore, setBestMoveHighScore] = useLocalStorage("redwhiteblue.bestMove", "0");
+  const [bestAverageScore, setBestAverageScore] = useLocalStorage("redwhiteblue.bestAverage", "0.0");
+  const [highScore, setHighScore] = useLocalStorage("redwhiteblue.bestScore", "0");
+  const [newBestMoveRecord, setNewBestMoveRecord] = useState(false);
+  const [newAverageScoreRecord, setNewAverageScoreRecord] = useState(false);
+
+  const [newHighScoreRecord, setNewHighScoreRecord] = useState(false);
 
   const resetBoard = () => {
     let array = [];
@@ -27,6 +35,25 @@ export default function Board({}: Props) {
     const possibleMoves = MovesLeft(array);
     setMovesLeft(possibleMoves);
   };
+
+  useEffect(() => {
+    if (movesLeft === 0) {
+      // end the game
+      const gameScore = parseInt((averageMove * bestMove).toFixed(0));
+      if (gameScore > parseInt(highScore)) {
+        setHighScore(gameScore.toString());
+        setNewHighScoreRecord(true);
+      }
+      if (averageMove > parseFloat(bestAverageScore)) {
+        setBestAverageScore(averageMove.toFixed(2));
+        setNewAverageScoreRecord(true);
+      }
+      if (bestMove > parseInt(bestMoveHighScore)) {
+        setBestMoveHighScore(bestMove.toString());
+        setNewBestMoveRecord(true);
+      }
+    }
+  }, [movesLeft]);
 
   const cycleCell = (row: number, col: number) => {
     // user made a move by clicking
@@ -51,6 +78,7 @@ export default function Board({}: Props) {
   };
 
   const handleClick = (row: number, col: number) => {
+    if (movesLeft === 0) return;
     cycleCell(row, col);
   };
 
@@ -129,18 +157,22 @@ export default function Board({}: Props) {
                   <div className="stat">
                     <div className="stat-title">Moves Made</div>
                     <div className="stat-value">{movesMade}</div>
+                    <div className="stat-desc">&nbsp;</div>
                   </div>
                   <div className="stat">
                     <div className="stat-title">Best move</div>
                     <div className="stat-value">{bestMove}</div>
+                    <div className="stat-desc">{newBestMoveRecord ? "New high!" : "  "}</div>
                   </div>
                   <div className="stat">
                     <div className="stat-title">Average</div>
                     <div className="stat-value">{averageMove.toFixed(2)}</div>
+                    <div className="stat-desc">{newAverageScoreRecord ? "New high!" : "  "}</div>
                   </div>
                   <div className="stat">
                     <div className="stat-title">Score</div>
                     <div className="stat-value">{(averageMove * bestMove).toFixed(0)}</div>
+                    <div className="stat-desc">{newHighScoreRecord ? "New high!" : "  "}</div>
                   </div>
                 </div>
               </div>
