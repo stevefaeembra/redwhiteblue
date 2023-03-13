@@ -159,7 +159,7 @@ export default function Board({}: Props) {
             {movesLeft === 0 || !movesLeft ? (
               <div>
                 <p className="font-bold text-xl">Game over</p>
-                <div className="stats shadow">
+                <div className="stats stats-vertical md:stats-horizontal shadow">
                   <div className="stat">
                     <div className="stat-title">Moves Made</div>
                     <div className="stat-value">{movesMade}</div>
@@ -184,7 +184,7 @@ export default function Board({}: Props) {
               </div>
             ) : (
               <>
-                <div className="stats shadow">
+                <div className="stats stats-vertical md:stats-horizontal shadow">
                   <div className="stat">
                     <div className="stat-title">Moves Made</div>
                     <div className="stat-value">{movesMade}</div>
